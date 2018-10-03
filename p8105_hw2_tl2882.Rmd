@@ -104,3 +104,11 @@ For available data, the total precipitation in 2017 was ```r sum(filter(data_pre
 
 The median number of sports balls in a dumpster in 2016 was```r median(filter(data2, year == "2016")$sports_balls)```.
 
+# Problem 3
+
+```{r install_github}
+# install.packages("devtools")
+devtools::install_github("p8105/p8105.datasets")
+library(p8105.datasets)
+```
+
