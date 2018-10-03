@@ -12,8 +12,6 @@ library(tidyverse)
 
 # Problem 1
 
-## Read and tidy data
-
 ```{r read_and_tidy_data}
 data1 = read.csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>% 
   janitor::clean_names() %>% 
@@ -21,7 +19,6 @@ data1 = read.csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>%
          entry, vending, entrance_type, ada) %>% 
   mutate(entry = recode(entry, "YES" = TRUE, "NO" = FALSE))
 ```
-
 
 The variables the dataset contains are names of line, names of station, latitudes of station, longitudes of station, train of route1 to route11, entry allowed or not, with vending or not, type of entrance, ADA compliant or not.
 
@@ -31,7 +28,7 @@ The dimension of resulting dataset is (```r  dim(data1) ```) (the first number i
 
 These data are not tidy because there are columns named route1 to route11.
 
-### Problem 1.1
+## Problem 1.1
 
 ```{r Problem1_1}
 data1_distinct = distinct(data1, line, station_name, .keep_all = TRUE)
@@ -40,7 +37,7 @@ nrow(data1_distinct)
 
 There are 465 distinct stations.
 
-### Problem 1.2
+## Problem 1.2
 
 ```{r Problem1_2}
 nrow(filter(data1_distinct, ada == TRUE))
@@ -48,7 +45,7 @@ nrow(filter(data1_distinct, ada == TRUE))
 
 84 distinct stations are ADA compliant.
 
-### Problem 1.3
+## Problem 1.3
 
 ```{r Problem1_3}
 data1_withoutvending = filter(data1, vending == "NO")
@@ -56,3 +53,17 @@ sum(data1_withoutvending$entry)/length(data1_withoutvending$entry)
 ```
 
 37.70492% of station entrances / exits without vending allow entrance.
+
+## Reformat data
+```{r Reformat_data}
+data1_A_distinct = gather(data1, key = route, value = train, route1:route11) %>% 
+  filter(train == "A") %>% 
+  distinct(line, station_name, .keep_all = TRUE)
+nrow(data1_A_distinct)
+nrow(filter(data1_A_distinct, ada == TRUE))
+```
+
+60 distinct stations serve the A train.
+
+Of the stations that serve the A train, 17 stations are ADA compliant.
+
