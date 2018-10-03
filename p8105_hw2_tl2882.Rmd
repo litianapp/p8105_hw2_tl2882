@@ -38,16 +38,21 @@ data1_distinct = distinct(data1, line, station_name, .keep_all = TRUE)
 nrow(data1_distinct)
 ```
 
+There are 465 distinct stations.
+
 ### Problem 1.2
 
-```{r}
+```{r Problem1_2}
 nrow(filter(data1_distinct, ada == TRUE))
 ```
 
+84 distinct stations are ADA compliant.
+
 ### Problem 1.3
 
-```{r}
-data1_withoutvending = filter(data, vending == "NO")
+```{r Problem1_3}
+data1_withoutvending = filter(data1, vending == "NO")
 sum(data1_withoutvending$entry)/length(data1_withoutvending$entry)
 ```
 
+37.70492% of station entrances / exits without vending allow entrance.
