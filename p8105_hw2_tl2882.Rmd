@@ -69,7 +69,7 @@ Of the stations that serve the A train, 17 stations are ADA compliant.
 
 # Problem 2
 
-## Read and clean the Mr. Trash Wheel sheet:
+## Read and tidy the Mr. Trash Wheel sheet:
 
 ```{r read_and_tidy_data2}
 library(readxl)
@@ -80,7 +80,7 @@ data2 = read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx",
   mutate(sports_balls = as.integer(round(sports_balls)))
 ```
 
-## Read and clean precipitation data for 2016 and 2017:
+## Read and tidy precipitation data for 2016 and 2017:
 
 ```{r read_and_tidy_precipitation_data}
 prec_2016 = read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx",
@@ -106,9 +106,39 @@ The median number of sports balls in a dumpster in 2016 was```r median(filter(da
 
 # Problem 3
 
-```{r install_github}
+## Install github dataset
+
+```{r install_github_dataset}
 # install.packages("devtools")
 devtools::install_github("p8105/p8105.datasets")
 library(p8105.datasets)
 ```
+
+## Read and tidy brfss_smart2010
+
+```{r Read_and_tidy_brfss_smart2010}
+brfss = brfss_smart2010 %>% 
+  janitor::clean_names() %>%
+  filter(topic == "Overall Health") %>% 
+  select(-class, -topic, -question, -sample_size, -(confidence_limit_low:geo_location)) %>% 
+  spread(key = response, value = data_value) %>% 
+  janitor::clean_names() %>%
+  mutate(excellent_or_verygood = excellent + very_good)
+```
+
+## Problem 3.1
+
+```{r}
+nrow(distinct(brfss, locationdesc))
+nrow(distinct(brfss, locationabbr))
+arrange(count(brfss, brfss$locationabbr), desc(n))
+```
+
+404 unique locations are included in the dataset.
+
+All 50 states and Washington District of Columbia are represented.
+
+New Jersey state is observed the most (146 times).
+
+## Problem 3.2
 
