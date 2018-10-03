@@ -128,7 +128,7 @@ brfss = brfss_smart2010 %>%
 
 ## Problem 3.1
 
-```{r}
+```{r Problem_3_1}
 nrow(distinct(brfss, locationdesc))
 nrow(distinct(brfss, locationabbr))
 arrange(count(brfss, brfss$locationabbr), desc(n))
@@ -141,4 +141,9 @@ All 50 states and Washington District of Columbia are represented.
 New Jersey state is observed the most (146 times).
 
 ## Problem 3.2
+
+```{r Problem_3_2}
+brfss_2002 = filter(brfss, year == "2002")
+median(brfss_2002$excellent, na.rm = TRUE)
+```
 
