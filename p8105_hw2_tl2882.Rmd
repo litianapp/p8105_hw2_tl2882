@@ -29,6 +29,10 @@ data1 = read.csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>%
 
 The variables the dataset contains are names of line, names of station, latitudes of station, longitudes of station, train of route1 to route11, entry allowed or not, with vending or not, type of entrance, ADA compliant or not.
 
+```{r variable_names}
+variable.names(data1)
+```
+
 Data cleaning steps so far include changing original variable names into reasonable names, selecting needed variables (columns), and converting the entry variable from character (YES vs NO) to a logical variable (TRUE vs FALSE).
 
 The dimension of resulting dataset is (```r  dim(data1) ```) (the first number is the number of the rows, the second number is the number of the columns)
@@ -50,7 +54,7 @@ There are 465 distinct stations.
 nrow(filter(data1_distinct, ada == TRUE))
 ```
 
-84 distinct stations are ADA compliant.
+There are 84 distinct stations that are ADA compliant.
 
 ## Problem 1.3
 
@@ -59,7 +63,7 @@ data1_withoutvending = filter(data1, vending == "NO")
 sum(data1_withoutvending$entry)/length(data1_withoutvending$entry)
 ```
 
-37.70492% of station entrances / exits without vending allow entrance.
+There are 37.70492% of station entrances / exits without vending that allow entrance.
 
 ## Reformat data
 ```{r Reformat_data}
@@ -70,7 +74,7 @@ nrow(data1_A_distinct)
 nrow(filter(data1_A_distinct, ada == TRUE))
 ```
 
-60 distinct stations serve the A train.
+There are 60 distinct stations that serve the A train.
 
 Of the stations that serve the A train, 17 stations are ADA compliant.
 
@@ -103,9 +107,9 @@ data_prec = bind_rows(prec_2016, prec_2017) %>%
   mutate(month = month.name[month])
 ```
 
-In Mr.Trash Wheel dataset, the number of observation is ```r nrow(data2)```. The key variable I choose is "Dumpster".
+In Mr.Trash Wheel dataset, the number of observations is ```r nrow(data2)```. The key variable I choose is "Dumpster".
 
-In percipitation dataset, the number of observation is ```r nrow(data_prec)```. The key variable I choose is "Total".
+In percipitation dataset, the number of observations is ```r nrow(data_prec)```. The key variable I choose is "Total".
 
 For available data, the total precipitation in 2017 was ```r sum(filter(data_prec, year == "2017")$total)```.
 
